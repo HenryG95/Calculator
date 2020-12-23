@@ -164,7 +164,7 @@ pad.forEach(item => {
         }
     });
     item.addEventListener('mouseup', () => {
-        item.removeAttribute('border-radius');
+        item.style['border-radius'] = '0px';
         item.style['background-color'] = 'rgb(220,220,220,0)';
     })
 })
