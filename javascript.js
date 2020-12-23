@@ -69,13 +69,27 @@ const silentCompute = (string) => {
 
 }
 
+const findString = (array) => {
+    var place = 0
+    array.forEach(item => {
+        if(typeof item == 'string') {
+            place = array.indexOf(item);
+        }
+    })
+    return place;
+}
+
 const recursive = (array,sign) => {
     if(typeofCheck(array)) {
         return compute(array,checkSign(sign));
     } else {
-        var a = recursive(parse(array[1].split(check(array[1]))),check(array[1]));
-        console.log(array.splice(1,1,a));
+        while(typeofCheck(array) != true) {
+        var a = recursive(parse(array[findString(array)].split(check(array[findString(array)]))),check(array[findString(array)]));
+        array.splice(array.indexOf(array[findString(array)]),1,a);
+        console.log(array);
+        }
         return compute(array,checkSign(sign));
+
     }
 }
 
@@ -92,7 +106,7 @@ const endCompute = (content) => {
         secondScreen.textContent = '';
     } else {
     var symbols = check(content);
-    console.log(symbols);
+    console.log(symbols)
     var result  = recursive(parse(numbers),symbols);
     secondScreen.textContent = result;
     display.appendChild(secondScreen);
