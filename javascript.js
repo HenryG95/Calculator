@@ -159,7 +159,6 @@ pad.forEach(item => {
         screen.textContent = screen.textContent + item.getAttribute('id');
         if(verify(screen.textContent)) {
             endCompute(screen.textContent);
-            
         }
     });
 })
@@ -172,6 +171,10 @@ operators.forEach(item => {
 
 
 clear.addEventListener('click', () => {
+    if(screen.textContent !='' && secondScreen.textContent ==''){
+        console.log('inside');
+        screen.textContent = '';
+    }
         var content = screen.textContent;
         var result = content.substring(0,content.length -1);
         screen.textContent = result;
@@ -183,10 +186,5 @@ result.addEventListener('click',() => {
     endCompute(content);
     screen.textContent = secondScreen.textContent;
     secondScreen.textContent = '';
-    if(screen.textContent != '') {
-        clear.addEventListener('click', () => {
-            screen.textContent = '';
-        })
-    }
         
 })
