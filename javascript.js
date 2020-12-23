@@ -6,11 +6,11 @@ const add = (array) => {
     return result;
 }
 const subtract = (array) => {
-    var result = 0;
-    array.forEach(item => {
-        result = item - result;
-    })
-    return result * -1;
+    var result = array[0];
+    for(var i =1;i<array.length;i++) {
+        result = result - array[i];
+    }
+    return result;
 }
 const multiply = (array) => {
     var result = 1;
@@ -31,14 +31,59 @@ const compute = (array,operator) => {
 }
 
 const parse = (array) => {
-    var result = array.map(item => {
+    return array.map(item => {
+        if(verify(item) == false) {
         return parseFloat(item);
-    })
-    return result;
+        }
+        return item;
+    });
+
 }
+
+
+
+const typeofCheck = (array) => {
+    counter = 0;
+    array.forEach(item => {
+        if(typeof item == 'number') {
+            counter = counter + 1;
+        }
+    })
+    if(counter == array.length) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+const split = (string) => {
+    var numbers = string.split(check(string));
+    return numbers;
+}
+
+const silentCompute = (string) => {
+    var numbers = string.split(check(string));
+    var symbols = check(string);
+    var result = compute(parse(numbers),checkSign(symbols));
+    return result;
+
+}
+
+const recursive = (array,sign) => {
+    if(typeofCheck(array)) {
+        return compute(array,checkSign(sign));
+    } else {
+        var a = recursive(parse(array[1].split(check(array[1]))),check(array[1]));
+        console.log(array.splice(1,1,a));
+        return compute(array,checkSign(sign));
+    }
+}
+
+
 
 const endCompute = (content) => {
     var numbers = content.split(check(content));
+    console.log(parse(numbers));
     if(numbers.includes('')) {
         numbers.splice(numbers.length -1,1);
     }
@@ -47,10 +92,8 @@ const endCompute = (content) => {
         secondScreen.textContent = '';
     } else {
     var symbols = check(content);
-    console.log(numbers);
-    console.log(parse(numbers));
     console.log(symbols);
-    var result  = compute(parse(numbers),checkSign(symbols));
+    var result  = recursive(parse(numbers),symbols);
     secondScreen.textContent = result;
     display.appendChild(secondScreen);
     }
