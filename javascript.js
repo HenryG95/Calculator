@@ -155,22 +155,36 @@ const clear = document.querySelector('.delete');
 let result = document.querySelector('.result');
 
 pad.forEach(item => {
-    item.addEventListener('click', () => {
+    item.addEventListener('mousedown', () => {
+        item.style['border-radius'] = '50%';
+        item.style['background-color'] = 'lightgrey';
         screen.textContent = screen.textContent + item.getAttribute('id');
         if(verify(screen.textContent)) {
             endCompute(screen.textContent);
         }
     });
+    item.addEventListener('mouseup', () => {
+        item.removeAttribute('border-radius');
+        item.style['background-color'] = 'rgb(220,220,220,0)';
+    })
 })
 
 operators.forEach(item => {
-    item.addEventListener('click', () => {
+    item.addEventListener('mousedown', () => {
+        item.style['border-radius'] = '50%';
+        item.style['background-color'] = 'lightgrey';
         screen.textContent = screen.textContent + item.getAttribute('id');
     });
+    item.addEventListener('mouseup', () => {
+        item.removeAttribute('border-radius');
+        item.style['background-color'] = 'rgb(220,220,220,0)';
+    })
 })
 
 
-clear.addEventListener('click', () => {
+clear.addEventListener('mousedown', () => {
+    clear.style['border-radius'] = '50%';
+    clear.style['background-color'] = 'lightgrey';
     if(screen.textContent !='' && secondScreen.textContent ==''){
         console.log('inside');
         screen.textContent = '';
@@ -181,10 +195,24 @@ clear.addEventListener('click', () => {
         endCompute(result);
 });
 
-result.addEventListener('click',() => {
+clear.addEventListener('mouseup',() => {
+    clear.removeAttribute('border-radius');
+    clear.style['background-color'] = 'rgb(220,220,220,0)';
+        
+})
+
+result.addEventListener('mousedown',() => {
+    result.style['border-radius'] = '50%';
+    result.style['background-color'] = 'lightgrey';
     var content = screen.textContent;
     endCompute(content);
     screen.textContent = secondScreen.textContent;
     secondScreen.textContent = '';
+        
+})
+
+result.addEventListener('mouseup',() => {
+    result.removeAttribute('border-radius');
+    result.style['background-color'] = 'rgb(220,220,220,0)';
         
 })
