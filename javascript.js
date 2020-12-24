@@ -70,8 +70,8 @@ const recursive = (array,sign) => {
     } else {
         while(typeofCheck(array) != true) {
         var a = recursive(parse(array[findString(array)].split(check(array[findString(array)]))),check(array[findString(array)]));
+        console.log(a);
         array.splice(array.indexOf(array[findString(array)]),1,a);
-        console.log(array);
         }
         return compute(array,checkSign(sign));
 
@@ -79,15 +79,19 @@ const recursive = (array,sign) => {
 }
 const endCompute = (content) => {
     var numbers = content.split(check(content));
+    console.log(numbers);
     if(numbers.includes('')) {
         numbers.splice(numbers.length -1,1);
     }
     parse(numbers);
     if(numbers.length == 1) {
         secondScreen.textContent = '';
-    } else {
+    }
     var symbols = check(content);
     var result  = recursive(parse(numbers),symbols);
+    if(isNaN(result)) {
+    secondScreen.textContent = '';
+    } else {
     secondScreen.textContent = result;
     display.appendChild(secondScreen);
     }
@@ -132,7 +136,7 @@ const deleteNumbers = document.querySelector('#delete');
 const clear = document.querySelector('#clear');
 const dark = document.querySelector('#dark');
 const erase = document.querySelectorAll('.delete');
-let result = document.querySelector('.result');
+var result = document.querySelector('.result');
 const body = document.querySelector('body');
 const container = document.querySelector('#container');
 
