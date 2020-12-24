@@ -29,7 +29,6 @@ const divide = (array) => {
 const compute = (array,operator) => {
     return operator(array);
 }
-
 const parse = (array) => {
     return array.map(item => {
         if(verify(item) == false) {
@@ -39,9 +38,6 @@ const parse = (array) => {
     });
 
 }
-
-
-
 const typeofCheck = (array) => {
     counter = 0;
     array.forEach(item => {
@@ -55,20 +51,10 @@ const typeofCheck = (array) => {
         return false;
     }
 }
-
 const split = (string) => {
     var numbers = string.split(check(string));
     return numbers;
 }
-
-const silentCompute = (string) => {
-    var numbers = string.split(check(string));
-    var symbols = check(string);
-    var result = compute(parse(numbers),checkSign(symbols));
-    return result;
-
-}
-
 const findString = (array) => {
     var place = 0
     array.forEach(item => {
@@ -78,7 +64,6 @@ const findString = (array) => {
     })
     return place;
 }
-
 const recursive = (array,sign) => {
     if(typeofCheck(array)) {
         return compute(array,checkSign(sign));
@@ -92,12 +77,8 @@ const recursive = (array,sign) => {
 
     }
 }
-
-
-
 const endCompute = (content) => {
     var numbers = content.split(check(content));
-    console.log(parse(numbers));
     if(numbers.includes('')) {
         numbers.splice(numbers.length -1,1);
     }
@@ -106,13 +87,11 @@ const endCompute = (content) => {
         secondScreen.textContent = '';
     } else {
     var symbols = check(content);
-    console.log(symbols)
     var result  = recursive(parse(numbers),symbols);
     secondScreen.textContent = result;
     display.appendChild(secondScreen);
     }
 }
-
 const checkSign = (sign) => {
     switch(sign) {
         case '+':
@@ -129,14 +108,12 @@ const checkSign = (sign) => {
 
     }
 }
-
 const check = (result) => {
     if(result.includes('+')) {return '+'}
     if(result.includes('-')) {return '-'}
     if(result.includes('*')) {return '*'}
     if(result.includes('%')) {return '%'}
 }
-
 const verify = (sign) => {
     if(sign.includes('+') || sign.includes('-') || sign.includes('*') || sign.includes('%')) {
         return true;
@@ -151,68 +128,95 @@ let display = document.querySelector('#display');
 let screen = document.querySelector('#screen');
 const pad = document.querySelectorAll('.pad');
 const operators = document.querySelectorAll('.operator');
-const clear = document.querySelector('.delete');
+const deleteNumbers = document.querySelector('#delete');
+const clear = document.querySelector('#clear');
+const dark = document.querySelector('#dark');
+const erase = document.querySelectorAll('.delete');
 let result = document.querySelector('.result');
+const body = document.querySelector('body');
+const container = document.querySelector('#container');
 
 pad.forEach(item => {
     item.addEventListener('mousedown', () => {
-        item.style['border-radius'] = '50%';
-        item.style['background-color'] = 'lightgrey';
         screen.textContent = screen.textContent + item.getAttribute('id');
         if(verify(screen.textContent)) {
             endCompute(screen.textContent);
         }
     });
-    item.addEventListener('mouseup', () => {
-        item.style['border-radius'] = '0px';
-        item.style['background-color'] = 'rgb(220,220,220,0)';
-    })
 })
-
 operators.forEach(item => {
     item.addEventListener('mousedown', () => {
-        item.style['border-radius'] = '50%';
-        item.style['background-color'] = 'lightgrey';
         screen.textContent = screen.textContent + item.getAttribute('id');
     });
-    item.addEventListener('mouseup', () => {
-        item.removeAttribute('border-radius');
-        item.style['background-color'] = 'rgb(220,220,220,0)';
-    })
 })
-
-
-clear.addEventListener('mousedown', () => {
-    clear.style['border-radius'] = '50%';
-    clear.style['background-color'] = 'lightgrey';
-    if(screen.textContent !='' && secondScreen.textContent ==''){
-        console.log('inside');
-        screen.textContent = '';
-    }
+deleteNumbers.addEventListener('mousedown', () => {
         var content = screen.textContent;
         var result = content.substring(0,content.length -1);
         screen.textContent = result;
         endCompute(result);
 });
-
-clear.addEventListener('mouseup',() => {
-    clear.removeAttribute('border-radius');
-    clear.style['background-color'] = 'rgb(220,220,220,0)';
-        
+clear.addEventListener('mousedown', () => {
+    screen.textContent = '';
+    secondScreen.textContent = '';
 })
-
 result.addEventListener('mousedown',() => {
-    result.style['border-radius'] = '50%';
-    result.style['background-color'] = 'lightgrey';
     var content = screen.textContent;
     endCompute(content);
     screen.textContent = secondScreen.textContent;
     secondScreen.textContent = '';
         
-})
+});
+dark.addEventListener('click', () => {
+    if(dark.textContent == 'Dark Theme') {
+        pad.forEach(item => {
+            item.style['background-color'] = 'rgb(0,0,0,0.75)'
+            item.style['color'] = 'white';
+        });
+        operators.forEach(item => {
+            item.style['background-color'] = 'rgb(0,0,0,0.75)'
+            item.style['color'] = 'white';
+        });
+        erase.forEach(item => {
+            item.style['background-color'] = 'rgb(0,0,0,0.75)';
+            item.style['color'] = 'white';
+        });
+        screen.style['color'] = 'white';
+        secondScreen.style['color'] = 'grey';
+        display.style['background-color'] = 'black';
+        result.style['background-color'] = 'rgb(0,0,0,0.75)';
+        result.style['color'] = 'white';
+        screen.style['color'] = 'white';
+        body.style['background-color'] = 'black';
+        dark.style['color']= 'white';
+        dark.textContent = 'Light Theme';
+        dark.setAttribute('style','color:white;margin-right:92%;border:1px solid white');
+    } else if(dark.textConent = 'Light Theme') {
+            pad.forEach(item => {
+                item.style['background-color'] = 'rgb(220,220,220,0.3)'
+                item.style['color'] = 'black';
+            });
+            operators.forEach(item => {
+                item.style['background-color'] = 'rgb(220,220,220,0.3)'
+                item.style['color'] = 'black';
+            });
+            erase.forEach(item => {
+                item.style['background-color'] = 'rgb(220,220,220,0.3)';
+                item.style['color'] = 'black';
+            });
+            screen.style['color'] = 'black';
+            secondScreen.style['color'] = 'rgb(128,128,128)';
+            display.style['background-color'] = 'white';
+            result.style['background-color'] = 'rgb(220,220,220,0.3)';
+            result.style['color'] = 'black';
+            screen.style['color'] = 'black';
+            body.style['background-color'] = 'white';
+            container.style['border'] = '5px solid rgb(128,128,128,0.5)';
+            dark.style['color']= 'white';
+            dark.textContent = 'Dark Theme';
+            dark.setAttribute('style','color:black;margin-right:92%;border:1px solid rgb(128,128,128,0.5)');
+     
+    }
 
-result.addEventListener('mouseup',() => {
-    result.removeAttribute('border-radius');
-    result.style['background-color'] = 'rgb(220,220,220,0)';
-        
-})
+
+
+});
